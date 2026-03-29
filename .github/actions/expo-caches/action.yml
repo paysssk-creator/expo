@@ -166,7 +166,9 @@ runs:
     - name: 🛠 Install NDK if cache not present
       if: inputs.ndk == 'true' && steps.cache-android-ndk.outputs.cache-hit != 'true'
       shell: bash
-      run: sudo $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "ndk;${{ inputs.ndk-version }}"
+      env:
+        NDK_VERSION: ${{ inputs.ndk-version }}
+      run: sudo $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "ndk;$NDK_VERSION"
 
     - name: 🔍️ Get cache key of Git LFS files
       if: inputs.git-lfs == 'true'
